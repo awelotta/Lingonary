@@ -9,9 +9,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-
 import com.example.lingonary.models.Word;
+
+import java.util.ArrayList;
 
 public class PodcastActivity extends AppCompatActivity {
 

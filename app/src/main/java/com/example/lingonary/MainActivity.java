@@ -8,11 +8,11 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.example.lingonary.models.Word;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
-
-import com.example.lingonary.models.Word;
 
 // Main class, hold fragments for main menu and word library so they share activity.
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnHomeFragmentListener {
