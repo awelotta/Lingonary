@@ -42,7 +42,7 @@ public class WordLibraryFragment extends Fragment {
         wordList.add(new Word("Tranquilo", "quiet"));
         wordList.add(new Word("Seguro", "safe"));
         wordList.add(new Word("Ocho", "eight"));
-
+        wordList.add(new Word("Vamos", "let's go"));
         adapter = new WordAdapter(wordList);
         recyclerView.setAdapter(adapter);
 

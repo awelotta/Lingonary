@@ -60,7 +60,7 @@ public class QuizActivity extends AppCompatActivity {
         });
 
    
-        btnNo.setOnClickListener(v -> dialog.dismiss());
+        btnNo.setOnClickListener(v -> finish());
 
         dialog.show();
     }

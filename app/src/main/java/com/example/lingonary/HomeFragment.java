@@ -1,6 +1,7 @@
 package com.example.lingonary;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,12 +35,17 @@ public class HomeFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         //Calling a function to move to the podcast activity, implemented on the main activity.
-        View btnPodcast = view.findViewById(R.id.podcastBtn);
-        btnPodcast.setOnClickListener(v -> {
+        View btnPodcast1 = view.findViewById(R.id.podcastBtn1);
+        View btnPodcast2 = view.findViewById(R.id.podcastBtn2);
+
+        btnPodcast1.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onOpenPodcast();
             }
         });
+        btnPodcast2.setOnClickListener(v ->
+            { Intent intent = new Intent(getActivity(), TranscriptPlayerActivity.class);
+            startActivity(intent); });
 
         return view;
     }

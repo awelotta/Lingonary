@@ -43,18 +43,19 @@
             android:layout_marginTop="8dp"
             android:gravity="center_horizontal">
             <Button
-                android:id="@+id/podcastBtn"
+                android:id="@+id/podcastBtn1"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:background="#CCC"
                 android:layout_margin="8dp"
                 android:text="Podcast"/>
-            <View
-                android:id="@+id/fakePodcast"
+            <Button
+                android:id="@+id/podcastBtn2"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:background="#CCC"
-                android:layout_margin="8dp"/>
+                android:layout_margin="8dp"
+                android:text="Podcast"/>
         </LinearLayout>
         <TextView
             android:id="@+id/recentsHeading"
