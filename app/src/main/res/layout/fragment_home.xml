@@ -3,46 +3,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp">
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <TextView
+            android:id="@+id/userGreeting"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="Hello Eliana!"
             android:textSize="22sp"
             android:textStyle="bold"
             android:layout_marginBottom="8dp"/>
-
         <TextView
+            android:id="@+id/targetLanguage"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="Learning: Spanish"
             android:layout_marginBottom="16dp"/>
 
         <EditText
+            android:id="@+id/podcastSearchBox"
             android:hint="Search for podcasts..."
             android:drawableStart="@android:drawable/ic_menu_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
         <TextView
+            android:id="@+id/featuredHeading"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="Featured"
             android:textStyle="bold"
             android:layout_marginTop="24dp"/>
-
         <LinearLayout
+            android:id="@+id/featuredPodcastCarousel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="8dp"
             android:gravity="center_horizontal">
-
             <Button
                 android:id="@+id/podcastBtn"
                 android:layout_width="70dp"
@@ -50,20 +49,19 @@
                 android:background="#CCC"
                 android:layout_margin="8dp"
                 android:text="Podcast"/>
-
             <View
+                android:id="@+id/fakePodcast"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:background="#CCC"
                 android:layout_margin="8dp"/>
         </LinearLayout>
-
         <TextView
+            android:id="@+id/recentsHeading"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="Recent Played"
+            android:text="Recently Played"
             android:textStyle="bold"
             android:layout_marginTop="24dp"/>
-
     </LinearLayout>
 </ScrollView>

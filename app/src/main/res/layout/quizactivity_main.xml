@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
@@ -22,7 +23,7 @@
             android:textColor="@android:color/black"
             android:layout_marginTop="80dp" />
 
-        
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +32,7 @@
             android:layout_marginTop="160dp"
             android:background="@android:color/white">
 
-      
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -97,7 +98,7 @@
 
     </LinearLayout>
 
-  
+
     <FrameLayout
         android:id="@+id/backContainer"
         android:layout_width="40dp"
@@ -112,7 +113,7 @@
             android:layout_height="22dp"
             android:layout_gravity="center"
             android:src="@android:drawable/ic_media_previous"
-            android:tint="@android:color/black" />
+            app:tint="@android:color/black" />
     </FrameLayout>
 
    

@@ -61,6 +61,7 @@ public class PodcastActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         sendResultAndFinish();
     }
 }
