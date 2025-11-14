@@ -14,8 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import edu.illinois.cs465.wordlibrarytest.adapters.WordAdapter;
-import edu.illinois.cs465.wordlibrarytest.models.Word;
+import com.example.lingonary.adapters.WordAdapter;
+import com.example.lingonary.models.Word;
 import java.util.ArrayList;
 import java.util.List;
 // Class implementing the word library fragment inside Main function

@@ -12,7 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
-import edu.illinois.cs465.wordlibrarytest.models.Word;
+import com.example.lingonary.models.Word;
 
 // Main class, hold fragments for main menu and word library so they share activity.
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnHomeFragmentListener {

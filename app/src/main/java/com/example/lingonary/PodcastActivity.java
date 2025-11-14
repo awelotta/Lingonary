@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-import edu.illinois.cs465.wordlibrarytest.models.Word;
+import com.example.lingonary.models.Word;
 
 public class PodcastActivity extends AppCompatActivity {
 
@@ -28,6 +28,7 @@ public class PodcastActivity extends AppCompatActivity {
         addButton.setOnClickListener(v -> showAddWordDialog());
         btnExit.setOnClickListener(v -> sendResultAndFinish());
     }
+
     // Add word function,
     private void showAddWordDialog() {
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_word, null);
@@ -51,17 +52,12 @@ public class PodcastActivity extends AppCompatActivity {
                 .setNegativeButton("Cancel", null)
                 .show();
     }
+
     //ensuring that the words are sent back.
     private void sendResultAndFinish() {
         Intent resultIntent = new Intent();
         resultIntent.putParcelableArrayListExtra("newWords", newWords);
         setResult(RESULT_OK, resultIntent);
         finish();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        sendResultAndFinish();
     }
 }
