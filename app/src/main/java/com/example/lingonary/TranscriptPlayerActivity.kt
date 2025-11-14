@@ -6,10 +6,11 @@ import android.view.View
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageButton
 
 class TranscriptPlayerActivity: AppCompatActivity(), View.OnClickListener {
     lateinit var mediaPlayer: MediaPlayer
-    lateinit var playButton: Button
+    lateinit var playButton: AppCompatImageButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
