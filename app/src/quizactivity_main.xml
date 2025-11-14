@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="top|center_horizontal"
+        android:background="@android:color/white">
+
+
+        <TextView
+            android:id="@+id/titleVamos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vamos"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="80dp" />
+
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="160dp"
+            android:background="@android:color/white">
+
+      
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@android:color/white">
+
+                <Button
+                    android:id="@+id/btnLetsGo"
+                    android:layout_width="120dp"
+                    android:layout_height="60dp"
+                    android:text="Let's go"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="@android:color/black"
+                    android:layout_margin="8dp" />
+
+                <Button
+                    android:id="@+id/btnHappy"
+                    android:layout_width="120dp"
+                    android:layout_height="60dp"
+                    android:text="Happy"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="@android:color/black"
+                    android:layout_margin="8dp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@android:color/white">
+
+                <Button
+                    android:id="@+id/btnVictory"
+                    android:layout_width="120dp"
+                    android:layout_height="60dp"
+                    android:text="Victory"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="@android:color/black"
+                    android:layout_margin="8dp" />
+
+                <Button
+                    android:id="@+id/btnPotato"
+                    android:layout_width="120dp"
+                    android:layout_height="60dp"
+                    android:text="Potato"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="@android:color/black"
+                    android:layout_margin="8dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+  
+    <FrameLayout
+        android:id="@+id/backContainer"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="top|start"
+        android:layout_margin="16dp"
+        android:background="@drawable/circle_white_border">
+
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center"
+            android:src="@android:drawable/ic_media_previous"
+            android:tint="@android:color/black" />
+    </FrameLayout>
+
+   
+
+</FrameLayout>
