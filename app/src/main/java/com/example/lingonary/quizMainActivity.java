@@ -1,4 +1,4 @@
-package cs465.illinois.quizscreenfunctional;
+package com.example.lingonary;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
