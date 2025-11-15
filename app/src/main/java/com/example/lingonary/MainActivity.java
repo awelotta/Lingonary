@@ -11,26 +11,46 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.lingonary.models.Word;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
+import com.example.lingonary.onboarding.OnboardingKeys;
 import java.util.ArrayList;
 
 // Main class, hold fragments for main menu and word library so they share activity.
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnHomeFragmentListener {
 
-    private Fragment homeFragment = new HomeFragment();
+    private HomeFragment homeFragment;
     private WordLibraryFragment wordLibraryFragment = new WordLibraryFragment();
-    private Fragment active = homeFragment;
+    private Fragment active;
 
     private ActivityResultLauncher<Intent> podcastLauncher;
+
+    private String userName;
+    private String targetLanguage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Section in charge of navigation between home and word library
+
         BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
         FragmentManager fm = getSupportFragmentManager();
 
+        // Get onboarding data from intent
+        userName = getIntent().getStringExtra(OnboardingKeys.EXTRA_USER_NAME);
+        targetLanguage = getIntent().getStringExtra(OnboardingKeys.EXTRA_TARGET_LANGUAGE);
+
+        if (userName == null) userName = "";
+        if (targetLanguage == null) targetLanguage = "Language";
+
+        // --- PASS DATA TO HOME FRAGMENT ---
+        Bundle args = new Bundle();
+        args.putString("username", userName);
+        args.putString("targetLanguage", targetLanguage);
+
+        homeFragment = new HomeFragment();
+        homeFragment.setArguments(args);
+        active = homeFragment;
+
+        // Add fragments
         fm.beginTransaction()
                 .add(R.id.fragment_container, wordLibraryFragment, "2")
                 .hide(wordLibraryFragment)
@@ -40,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
                 .add(R.id.fragment_container, homeFragment, "1")
                 .commit();
 
+        // Navigation
         bottomNav.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.nav_home) {
@@ -52,29 +73,41 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
             return true;
         });
 
-        // Transition between the main activiy and the podcast, used to get the added words from there back to word library.
+        // Podcast result handling
         podcastLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        ArrayList<Word> newWords = null;
+
+                        ArrayList<Word> newWords;
+
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
                             newWords = result.getData().getParcelableArrayListExtra("newWords", Word.class);
                         } else {
                             newWords = result.getData().getParcelableArrayListExtra("newWords");
                         }
+
                         if (newWords != null) {
                             for (Word word : newWords) {
                                 wordLibraryFragment.addWord(word.getLearning(), word.getNativeLang());
                             }
                         }
                     }
-                });
+                }
+        );
     }
 
     @Override
     public void onOpenPodcast() {
         Intent intent = new Intent(this, PodcastActivity.class);
         podcastLauncher.launch(intent);
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getTargetLanguage() {
+        return targetLanguage;
     }
 }
