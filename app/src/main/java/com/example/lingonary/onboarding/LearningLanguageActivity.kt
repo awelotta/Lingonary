@@ -6,7 +6,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import com.example.lingonary.R
-import com.example.lingonary.home.HomeActivity
+import com.example.lingonary.MainActivity
 
 class LearningLanguageActivity : ComponentActivity() {
     private var selectedTargetLanguage: String? = null
@@ -59,7 +59,7 @@ class LearningLanguageActivity : ComponentActivity() {
             if (selectedTargetLanguage == null) {
                 Toast.makeText(this, R.string.error_language_empty, Toast.LENGTH_SHORT).show()
             } else {
-                val intent = Intent(this, HomeActivity::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra(OnboardingKeys.EXTRA_USER_NAME, userName)
                 intent.putExtra(OnboardingKeys.EXTRA_NATIVE_LANGUAGE, nativeLanguage)
                 intent.putExtra(OnboardingKeys.EXTRA_TARGET_LANGUAGE, selectedTargetLanguage)

@@ -283,14 +283,14 @@
         android:id="@+id/llBottomNav"
         android:layout_width="0dp"
         android:layout_height="72dp"
-        android:orientation="horizontal"
-        android:gravity="center"
         android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/navHome"
