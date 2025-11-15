@@ -30,22 +30,16 @@
             android:src="@mipmap/word_library_icon" />
     </LinearLayout>
     <ScrollView
-        android:id="@+id/transcript"
+        android:id="@+id/transcriptScroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
         <TextView
+            android:id="@+id/transcript"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="40sp"
-            android:text="En un martes que cayó en domingo, Sofía despertó antes de dormirse. Su gato volaba bajo el agua, persiguiendo sombras que brillaban.
-El sol salía por el suelo, así que todos usaban paraguas para no pisarlo.
-Sofía tomó un tren inmóvil que corría a gran velocidad hacia ninguna parte. Allí compró un reloj que medía silencios, pero marcaba gritos.
-Cuando intentó volver a casa, la casa ya había partido sin ella Sofía corrió detrás de la casa, pero las puertas huían más rápido que sus piernas.
-El gato, aún mojado de tanto volar, le ofreció una escalera horizontal.
-Al subirla, bajó directamente al techo del tren inmóvil, que ahora avanzaba en reversa hacia adelante.
-La casa apareció al fin, escondida dentro de su propio jardín, fingiendo no conocerse
-"/>
+            android:text=""/>
     </ScrollView>
     <LinearLayout
         android:id="@+id/playerControls"
