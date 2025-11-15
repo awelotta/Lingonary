@@ -1,5 +1,8 @@
 cs465 (user interface design) project at uiuc
 
+# About Lingonary 
+Lingonary is an Android app that helps learners practice a new language through short podcast-style content, a word library, and quizzes. It supports one tap from confusion to comprehension: While listening podcasts, tap any word in the time-synced transcript to see meaning inline and save it –no context switch. Later, review those words with spaced practice grounded in the original audio.
+
 Our Main Tasks:
 1) Listen to a podcast
 2) Peek definition and save word
