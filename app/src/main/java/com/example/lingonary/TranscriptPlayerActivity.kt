@@ -8,6 +8,7 @@ import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -16,6 +17,7 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
@@ -26,7 +28,7 @@ import java.io.ByteArrayOutputStream
 import java.io.InputStream
 
 
-class TranscriptPlayerActivity: AppCompatActivity(), View.OnClickListener {
+class TranscriptPlayerActivity: AppCompatActivity() {
     lateinit var mediaPlayer: MediaPlayer
     lateinit var playButton: AppCompatImageButton
     lateinit var transcript: TextView
@@ -34,17 +36,25 @@ class TranscriptPlayerActivity: AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.transcript_player)
+
         mediaPlayer = MediaPlayer.create(this, R.raw.spanish_speech)
         playButton = findViewById(R.id.playButton)
-        playButton.setOnClickListener(this)
-        findViewById<ImageButton>(R.id.wordLibraryButton).setOnClickListener(object:View.OnClickListener {
-            override fun onClick(v: View?) {
-                // todo launch wordlibrary
+        playButton.setOnClickListener { v ->
+            if (mediaPlayer.isPlaying) {
+                mediaPlayer.stop()
+            } else {
+                mediaPlayer.start()
             }
-        })
+            // should make some visual indication of isPlaying
+            // Speech Attribution: Muntatge Carmen Amaya i Antonia Vilas.wav by barcelonetasonora -- https://freesound.org/s/609638/ -- License: Attribution NonCommercial 4.0
+        }
+        findViewById<ImageButton>(R.id.wordLibraryButton).setOnClickListener {
+            // todo launch wordlibrary
+        }
         findViewById<ImageButton>(R.id.backButton).setOnClickListener {
             var result = Intent()
             result.putParcelableArrayListExtra("newWords", newWords)
+            Log.i("newwordsreturn", "newwords is $result")
             setResult(RESULT_OK, result)
             finish()
         }
@@ -80,20 +90,6 @@ class TranscriptPlayerActivity: AppCompatActivity(), View.OnClickListener {
         transcript.text = spannable
         transcript.movementMethod = LinkMovementMethod()
     }
-    override fun onStart() {
-        super.onStart()
-    }
-    override fun onClick(v: View) {
-        if (v.id == R.id.transcript) {
-            if (mediaPlayer.isPlaying) {
-                mediaPlayer.stop()
-            } else {
-                mediaPlayer.start()
-            }
-        }
-        // should make some visual indication of isPlaying
-        // Speech Attribution: Muntatge Carmen Amaya i Antonia Vilas.wav by barcelonetasonora -- https://freesound.org/s/609638/ -- License: Attribution NonCommercial 4.0
-    }
     private fun readAllBytes(inputStream: InputStream): String {
         // Source - https://stackoverflow.com/a/35446009
         // Posted by Slava Vedenin, modified by community. See post 'Timeline' for change history
@@ -117,6 +113,7 @@ class TranscriptPlayerActivity: AppCompatActivity(), View.OnClickListener {
         return result
     }
     private fun inflateDefinitionPopup(view: View, word: String, translation: String) {
+//        Toast.makeText(this, newWords.size.toString(), Toast.LENGTH_SHORT).show()//todo announce newwords contents just for testing
         // Source - https://stackoverflow.com/a/50188704
         // Posted by Suragch, modified by community. See post 'Timeline' for change history
         // Retrieved 2025-11-14, License - CC BY-SA 4.0
@@ -132,6 +129,7 @@ class TranscriptPlayerActivity: AppCompatActivity(), View.OnClickListener {
         var addToWordLibrary: ImageButton = popupView.findViewById(R.id.addToWordLibrary)
         addToWordLibrary.setOnClickListener {
             newWords.add(Word(word, translation))
+            Toast.makeText(this, "WORD ADDED!", Toast.LENGTH_SHORT).show()
         }
         // create the popup window
         var width: Int = LinearLayout.LayoutParams.WRAP_CONTENT
@@ -144,27 +142,13 @@ class TranscriptPlayerActivity: AppCompatActivity(), View.OnClickListener {
         // this feels so jank... why are we dynamically creating so much stuff? instead of just summoning one layout and changing a few offset values?
         // I should do relative layout for this kind of thing, right? except, text isn't components so difficult
         // dismiss the popup window when touched
-        popupView.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(v: View, event: MotionEvent): Boolean {
-                popupWindow.dismiss()
-                return true
-            }
-        })
+        popupView.setOnTouchListener { v, event ->
+            popupWindow.dismiss()
+            true
+        }
     }
     private fun translate(word: String): String {
         //todo
         return "je ne se quoi"
     }
 }
-//
-//class WordClickableSpan : ClickableSpan() {
-//    override fun onClick(widget: View) {
-//
-//        Toast.makeText(
-//            widget.context,
-//            "you clicked on a word!",
-//            Toast.LENGTH_SHORT
-//        ).show()
-//        TODO("Not yet implemented")
-//    }
-//}

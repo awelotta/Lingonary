@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
     private Fragment active;
 
     private ActivityResultLauncher<Intent> podcastLauncher;
+    private ActivityResultLauncher<Intent> transcriptLauncher;
 
     private String userName;
     private String targetLanguage;
@@ -100,6 +101,12 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
     @Override
     public void onOpenPodcast() {
         Intent intent = new Intent(this, PodcastActivity.class);
+        podcastLauncher.launch(intent);
+    }
+
+    @Override
+    public void onOpenTranscript() {
+        Intent intent = new Intent(this, TranscriptPlayerActivity.class);
         podcastLauncher.launch(intent);
     }
 

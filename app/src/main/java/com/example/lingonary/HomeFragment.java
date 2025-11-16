@@ -21,6 +21,7 @@ public class HomeFragment extends Fragment {
 
     public interface OnHomeFragmentListener {
         void onOpenPodcast();
+        void onOpenTranscript();
     }
 
     @Override
@@ -66,9 +67,11 @@ public class HomeFragment extends Fragment {
                 listener.onOpenPodcast();
             }
         });
-        btnPodcast2.setOnClickListener(v ->
-            { Intent intent = new Intent(getActivity(), TranscriptPlayerActivity.class);
-            startActivity(intent); });
+        btnPodcast2.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onOpenTranscript();
+            }
+        });
 
         return view;
     }
