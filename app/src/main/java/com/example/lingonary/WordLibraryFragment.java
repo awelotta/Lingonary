@@ -25,14 +25,14 @@ public class WordLibraryFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private WordAdapter adapter;
-    private List<Word> wordList;
+    private ArrayList<Word> wordList;   // MUST be ArrayList
     private Button btnQuiz;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_word_library, container, false);
-        // Part that manages the recycler view.
+
         recyclerView = view.findViewById(R.id.recyclerWords);
         btnQuiz = view.findViewById(R.id.btnQuiz);
 
@@ -45,22 +45,31 @@ public class WordLibraryFragment extends Fragment {
         wordList.add(new Word("Seguro", "safe"));
         wordList.add(new Word("Ocho", "eight"));
         wordList.add(new Word("Vamos", "let's go"));
+
         adapter = new WordAdapter(wordList);
         recyclerView.setAdapter(adapter);
 
-        //Quiz button that moves to the Quiz Activity.
-        btnQuiz.setOnClickListener(v ->
-                { Intent intent = new Intent(getActivity(), QuizActivity.class);
-                    startActivity(intent); }
-        );
+        // ---------------------------
+        // FIXED QUIZ BUTTON HANDLER
+        // ---------------------------
+        btnQuiz.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), QuizActivity.class);
+            intent.putParcelableArrayListExtra("wordLibrary", wordList);
+            startActivity(intent);
+        });
 
         return view;
     }
-    // Function used to add words to the list from Main function.
+
+    // Add words from PodcastActivity
     public void addWord(String learning, String nativeWord) {
         Word newWord = new Word(learning, nativeWord);
         wordList.add(newWord);
         adapter.notifyItemInserted(wordList.size() - 1);
     }
 
+    // Return the full list for MainActivity
+    public ArrayList<Word> getWords() {
+        return wordList;
+    }
 }
