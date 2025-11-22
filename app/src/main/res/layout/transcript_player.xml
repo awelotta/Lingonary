@@ -8,11 +8,14 @@
         android:orientation="horizontal"
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-<!--        <Button-->
-<!--            android:id="@+id/backButton"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"/>-->
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp">
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_arrow_back_24"
+            />
         <TextView
             android:id="@+id/title"
             android:layout_width="0dp"
@@ -27,25 +30,19 @@
             android:layout_gravity="right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/word_library_icon" />
+            android:src="@drawable/baseline_collections_bookmark_24" />
     </LinearLayout>
     <ScrollView
-        android:id="@+id/transcript"
+        android:id="@+id/transcriptScroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
         <TextView
+            android:id="@+id/transcript"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="40sp"
-            android:text="En un martes que cayó en domingo, Sofía despertó antes de dormirse. Su gato volaba bajo el agua, persiguiendo sombras que brillaban.
-El sol salía por el suelo, así que todos usaban paraguas para no pisarlo.
-Sofía tomó un tren inmóvil que corría a gran velocidad hacia ninguna parte. Allí compró un reloj que medía silencios, pero marcaba gritos.
-Cuando intentó volver a casa, la casa ya había partido sin ella Sofía corrió detrás de la casa, pero las puertas huían más rápido que sus piernas.
-El gato, aún mojado de tanto volar, le ofreció una escalera horizontal.
-Al subirla, bajó directamente al techo del tren inmóvil, que ahora avanzaba en reversa hacia adelante.
-La casa apareció al fin, escondida dentro de su propio jardín, fingiendo no conocerse
-"/>
+            android:text=""/>
     </ScrollView>
     <LinearLayout
         android:id="@+id/playerControls"
@@ -59,7 +56,9 @@ La casa apareció al fin, escondida dentro de su propio jardín, fingiendo no co
             android:id="@+id/playButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/play_button" />
+            android:scaleX="2"
+            android:scaleY="2"
+            android:src="@drawable/outline_autoplay_24" />
         <!-- skip time right -->
     </LinearLayout>
 </LinearLayout>

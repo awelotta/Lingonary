@@ -10,16 +10,33 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Lingonary">
+        android:theme="@style/Theme.Lingonary_home">
+        <!-- Onboarding page #1: launcher -->
         <activity
-            android:name=".MainActivity"
+            android:name=".onboarding.OnboardingNameActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Onboarding page #2 -->
+        <activity
+            android:name=".onboarding.NativeLanguageActivity"
+            android:exported="false" />
+
+        <!-- Onboarding page #3 -->
+        <activity
+            android:name=".onboarding.LearningLanguageActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".home.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
         <activity android:name=".PodcastActivity"/>
         <activity android:name=".QuizActivity"/>
         <activity android:name=".TranscriptPlayerActivity"/>

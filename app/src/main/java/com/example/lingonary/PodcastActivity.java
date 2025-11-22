@@ -36,21 +36,21 @@ public class PodcastActivity extends AppCompatActivity {
         EditText editNative = dialogView.findViewById(R.id.editNative);
 
         new AlertDialog.Builder(this)
-                .setTitle("Add New Word")
-                .setView(dialogView)
-                .setPositiveButton("Add", (dialog, which) -> {
-                    String learning = editLearning.getText().toString().trim();
-                    String nativeWord = editNative.getText().toString().trim();
+            .setTitle("Add New Word")
+            .setView(dialogView)
+            .setPositiveButton("Add", (dialog, which) -> {
+                String learning = editLearning.getText().toString().trim();
+                String nativeWord = editNative.getText().toString().trim();
 
-                    if (!learning.isEmpty() && !nativeWord.isEmpty()) {
-                        newWords.add(new Word(learning, nativeWord));
-                        Toast.makeText(this, "Word added!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(this, "Both fields required", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .setNegativeButton("Cancel", null)
-                .show();
+                if (!learning.isEmpty() && !nativeWord.isEmpty()) {
+                    newWords.add(new Word(learning, nativeWord)); // !!!! BASICALLY THIS IS FOR ADDING THE WORD
+                    Toast.makeText(this, "Word added!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Both fields required", Toast.LENGTH_SHORT).show();
+                }
+            })
+            .setNegativeButton("Cancel", null)
+            .show();
     }
 
     //ensuring that the words are sent back.

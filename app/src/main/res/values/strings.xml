@@ -1,3 +1,37 @@
 <resources>
     <string name="app_name">Lingonary</string>
+    <!-- Page 1 -->
+    <string name="onboarding_name_title">Hi! What\'s your name?</string>
+    <string name="onboarding_hint_name">Enter your name here…</string>
+    <string name="onboarding_continue">Continue</string>
+    <string name="onboarding_back">Back</string>
+    <string name="error_name_empty">Please enter your name</string>
+    <!-- Page 2 -->
+    <string name="onboarding_q_native">What is your native language?</string>
+    <!-- Page 3 -->
+    <string name="onboarding_q_learning">Which language do you want to learn?</string>
+    <string name="error_learning_language_empty">Please choose a language to learn</string>
+    <!-- Languages -->
+    <string name="lang_english">English</string>
+    <string name="lang_chinese">Chinese</string>
+    <string name="lang_spanish">Spanish</string>
+    <!-- Shared -->
+    <string name="error_language_empty">Please choose a language</string>
+    <string name="word_library">Word Library</string>
+    <string name="search">Search</string>
+    <string name="home">Home</string>
+    <string name="view_all">View All</string>
+    <string name="recent_played">Recent Played</string>
+    <string name="featured">Featured</string>
+    <string name="view_more">View More</string>
+    <string name="search_for_podcasts">Search for podcasts…</string>
+    <string name="learning">Learning:</string>
+    <string name="English">English</string>
+    <string name="Featured">Featured</string>
+    <string name="View_More">View More</string>
+    <string name="Recent_played">Recent Played</string>
+    <string name="View_all">View All</string>
+    <string name="Home">Home</string>
+    <string name="Word_library">Word Library</string>
+    <string name="Search">Search</string>
 </resources>
