@@ -2,13 +2,13 @@ package com.example.lingonary;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.lingonary.models.Word;
 
@@ -17,18 +17,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class QuizActivity extends AppCompatActivity {
+public class QuizActivity extends AppCompatActivity implements View.OnClickListener {
 
     private List<Word> wordList;
     private List<Word> quizList;
-
     private Word currentWord;
+    private int currentQuestionIndex = 0;
 
     private TextView titleVamos;
-    private Button btnLetsGo;
-    private Button btnHappy;
-    private Button btnVictory;
-    private Button btnPotato;
+    private Button btnOption1, btnOption2, btnOption3, btnOption4, btnContinue;
+    private ProgressBar progressBar;
+    private List<Button> optionButtons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,18 +35,40 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.quizactivity_main);
 
         wordList = getIntent().getParcelableArrayListExtra("wordList");
-        quizList = wordList.stream().filter(w -> w.getTimesCorrect() < 2).collect(Collectors.toList());
+        if (wordList != null) {
+            List<Word> availableWords = wordList.stream().filter(w -> w.getTimesCorrect() < 3).collect(Collectors.toList());
+            Collections.shuffle(availableWords);
+            quizList = availableWords.stream().limit(10).collect(Collectors.toList());
+        }
 
         titleVamos = findViewById(R.id.titleVamos);
-        btnLetsGo = findViewById(R.id.btnLetsGo);
-        btnHappy = findViewById(R.id.btnHappy);
-        btnVictory = findViewById(R.id.btnVictory);
-        btnPotato = findViewById(R.id.btnPotato);
+        btnOption1 = findViewById(R.id.btnOption1);
+        btnOption2 = findViewById(R.id.btnOption2);
+        btnOption3 = findViewById(R.id.btnOption3);
+        btnOption4 = findViewById(R.id.btnOption4);
+        btnContinue = findViewById(R.id.btnContinue);
+        progressBar = findViewById(R.id.progressBar);
+
+        optionButtons = new ArrayList<>();
+        optionButtons.add(btnOption1);
+        optionButtons.add(btnOption2);
+        optionButtons.add(btnOption3);
+        optionButtons.add(btnOption4);
+
+        for (Button button : optionButtons) {
+            button.setOnClickListener(this);
+        }
+
+        btnContinue.setOnClickListener(v -> {
+            currentQuestionIndex++;
+            loadNewQuestion();
+        });
 
         ImageView backArrow = findViewById(R.id.backArrow);
         backArrow.setOnClickListener(v -> finishQuiz());
 
         if (quizList != null && !quizList.isEmpty()) {
+            progressBar.setMax(quizList.size());
             loadNewQuestion();
         } else {
             finishQuiz();
@@ -55,65 +76,61 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void loadNewQuestion() {
-        if (quizList.isEmpty()) {
+        if (currentQuestionIndex >= quizList.size()) {
             finishQuiz();
             return;
         }
 
-        Collections.shuffle(quizList);
-        currentWord = quizList.get(0);
-
+        resetButtonStyles();
+        currentWord = quizList.get(currentQuestionIndex);
+        currentWord.setHasBeenInQuiz(true);
         titleVamos.setText(currentWord.getLearning());
+        progressBar.setProgress(currentQuestionIndex + 1);
 
         List<Word> options = new ArrayList<>(wordList);
         options.remove(currentWord);
         Collections.shuffle(options);
 
-        List<Button> buttons = new ArrayList<>();
-        buttons.add(btnLetsGo);
-        buttons.add(btnHappy);
-        buttons.add(btnVictory);
-        buttons.add(btnPotato);
-        Collections.shuffle(buttons);
+        Collections.shuffle(optionButtons);
 
-        buttons.get(0).setText(currentWord.getNativeLang());
-        buttons.get(0).setOnClickListener(v -> {
-            currentWord.incrementTimesCorrect();
-            showResultDialog(true);
-        });
-
-        for (int i = 1; i < buttons.size(); i++) {
-            buttons.get(i).setText(options.get(i - 1).getNativeLang());
-            buttons.get(i).setOnClickListener(v -> showResultDialog(false));
+        optionButtons.get(0).setText(currentWord.getNativeLang());
+        for (int i = 1; i < optionButtons.size(); i++) {
+            optionButtons.get(i).setText(options.get(i - 1).getNativeLang());
         }
     }
 
-    private void showResultDialog(boolean isCorrect) {
-        View dialogView = LayoutInflater.from(this)
-                .inflate(R.layout.quizpopup_result, null, false);
+    @Override
+    public void onClick(View v) {
+        Button selectedButton = (Button) v;
+        String selectedAnswer = selectedButton.getText().toString();
 
-        TextView tvDetail = dialogView.findViewById(R.id.resultDetail);
-        Button btnYes = dialogView.findViewById(R.id.btnYes);
-        Button btnNo = dialogView.findViewById(R.id.btnNo);
+        if (selectedAnswer.equals(currentWord.getNativeLang())) {
+            selectedButton.setBackground(ContextCompat.getDrawable(this, R.drawable.quiz_button_correct));
+            currentWord.incrementTimesCorrect();
+        } else {
+            selectedButton.setBackground(ContextCompat.getDrawable(this, R.drawable.quiz_button_incorrect));
+            // Highlight the correct answer
+            for (Button button : optionButtons) {
+                if (button.getText().toString().equals(currentWord.getNativeLang())) {
+                    button.setBackground(ContextCompat.getDrawable(this, R.drawable.quiz_button_correct));
+                    break;
+                }
+            }
+        }
 
-        tvDetail.setText(isCorrect ? "Correct" : "Incorrect");
+        for (Button button : optionButtons) {
+            button.setEnabled(false);
+        }
 
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setView(dialogView)
-                .setCancelable(false)
-                .create();
+        btnContinue.setVisibility(View.VISIBLE);
+    }
 
-        btnYes.setText("Next");
-        btnYes.setOnClickListener(v -> {
-            quizList.remove(currentWord);
-            loadNewQuestion();
-            dialog.dismiss();
-        });
-
-        btnNo.setText("Exit");
-        btnNo.setOnClickListener(v -> finishQuiz());
-
-        dialog.show();
+    private void resetButtonStyles() {
+        for (Button button : optionButtons) {
+            button.setBackground(ContextCompat.getDrawable(this, R.drawable.quiz_button_default));
+            button.setEnabled(true);
+        }
+        btnContinue.setVisibility(View.INVISIBLE);
     }
 
     private void finishQuiz() {

@@ -7,17 +7,33 @@ public class Word implements Parcelable {
     private String learning;
     private String nativeLang;
     private int timesCorrect;
+    private boolean hasBeenInQuiz;
 
     public Word(String learning, String nativeLang) {
         this.learning = learning;
         this.nativeLang = nativeLang;
         this.timesCorrect = 0;
+        this.hasBeenInQuiz = false;
     }
 
     protected Word(Parcel in) {
         learning = in.readString();
         nativeLang = in.readString();
         timesCorrect = in.readInt();
+        hasBeenInQuiz = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(learning);
+        dest.writeString(nativeLang);
+        dest.writeInt(timesCorrect);
+        dest.writeByte((byte) (hasBeenInQuiz ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Word> CREATOR = new Creator<Word>() {
@@ -35,18 +51,8 @@ public class Word implements Parcelable {
     public String getLearning() { return learning; }
     public String getNativeLang() { return nativeLang; }
     public int getTimesCorrect() { return timesCorrect; }
+    public boolean hasBeenInQuiz() { return hasBeenInQuiz; }
 
     public void incrementTimesCorrect() { this.timesCorrect++; }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(learning);
-        dest.writeString(nativeLang);
-        dest.writeInt(timesCorrect);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+    public void setHasBeenInQuiz(boolean hasBeenInQuiz) { this.hasBeenInQuiz = hasBeenInQuiz; }
 }

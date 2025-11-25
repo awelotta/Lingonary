@@ -1,121 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="#FFFFFF">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="top|center_horizontal"
-        android:background="@android:color/white">
-
-
-        <TextView
-            android:id="@+id/titleVamos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Vamos"
-            android:textSize="48sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:layout_marginTop="80dp" />
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_marginTop="160dp"
-            android:background="@android:color/white">
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@android:color/white">
-
-                <Button
-                    android:id="@+id/btnLetsGo"
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:text="Let's go"
-                    android:textAllCaps="false"
-                    android:textSize="18sp"
-                    android:textColor="@android:color/white"
-                    android:backgroundTint="@android:color/black"
-                    android:layout_margin="8dp" />
-
-                <Button
-                    android:id="@+id/btnHappy"
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:text="Happy"
-                    android:textAllCaps="false"
-                    android:textSize="18sp"
-                    android:textColor="@android:color/white"
-                    android:backgroundTint="@android:color/black"
-                    android:layout_margin="8dp" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@android:color/white">
-
-                <Button
-                    android:id="@+id/btnVictory"
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:text="Victory"
-                    android:textAllCaps="false"
-                    android:textSize="18sp"
-                    android:textColor="@android:color/white"
-                    android:backgroundTint="@android:color/black"
-                    android:layout_margin="8dp" />
-
-                <Button
-                    android:id="@+id/btnPotato"
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:text="Potato"
-                    android:textAllCaps="false"
-                    android:textSize="18sp"
-                    android:textColor="@android:color/white"
-                    android:backgroundTint="@android:color/black"
-                    android:layout_margin="8dp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-
-    <FrameLayout
-        android:id="@+id/backContainer"
+    <ImageView
+        android:id="@+id/backArrow"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_gravity="top|start"
-        android:layout_margin="16dp"
-        android:background="@drawable/circle_white_border">
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/circle_white_border"
+        android:padding="8dp"
+        android:src="@android:drawable/ic_media_previous"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/backArrow"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_gravity="center"
-            android:src="@android:drawable/ic_media_previous"
-            app:tint="@android:color/black" />
-    </FrameLayout>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/backArrow"
+        app:layout_constraintEnd_toStartOf="@+id/timerIcon"
+        app:layout_constraintStart_toEndOf="@+id/backArrow"
+        app:layout_constraintTop_toTopOf="@+id/backArrow" />
 
-   
+    <ImageView
+        android:id="@+id/timerIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:src="@android:drawable/ic_lock_idle_alarm"
+        app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/progressBar" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/titleVamos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="美"
+        android:textColor="@android:color/black"
+        android:textSize="60sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+    <GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:columnCount="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleVamos">
+
+        <Button
+            android:id="@+id/btnOption1"
+            style="@style/QuizButton"
+            android:text="Beautiful" />
+
+        <Button
+            android:id="@+id/btnOption2"
+            style="@style/QuizButton"
+            android:text="Love" />
+
+        <Button
+            android:id="@+id/btnOption3"
+            style="@style/QuizButton"
+            android:text="Cold" />
+
+        <Button
+            android:id="@+id/btnOption4"
+            style="@style/QuizButton"
+            android:text="Stone" />
+
+    </GridLayout>
+
+    <Button
+        android:id="@+id/btnContinue"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="#D9D56B"
+        android:text="Continue"
+        android:textColor="@android:color/black"
+        android:visibility="invisible"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -67,12 +67,14 @@ public class WordLibraryFragment extends Fragment {
         recyclerLearning.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerMastered.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        wordList = new ArrayList<>();
-        wordList.add(new Word("Amor", "love"));
-        wordList.add(new Word("Tranquilo", "quiet"));
-        wordList.add(new Word("Seguro", "safe"));
-        wordList.add(new Word("Ocho", "eight"));
-        wordList.add(new Word("Vamos", "let's go"));
+        if (wordList == null) {
+            wordList = new ArrayList<>();
+            wordList.add(new Word("Amor", "love"));
+            wordList.add(new Word("Tranquilo", "quiet"));
+            wordList.add(new Word("Seguro", "safe"));
+            wordList.add(new Word("Ocho", "eight"));
+            wordList.add(new Word("Vamos", "let's go"));
+        }
 
         updateWordLists();
 
@@ -87,9 +89,9 @@ public class WordLibraryFragment extends Fragment {
 
     private void updateWordLists() {
         if (wordList == null) return;
-        List<Word> haventStartedList = wordList.stream().filter(w -> w.getTimesCorrect() == 0).collect(Collectors.toList());
-        List<Word> learningList = wordList.stream().filter(w -> w.getTimesCorrect() == 1).collect(Collectors.toList());
-        List<Word> masteredList = wordList.stream().filter(w -> w.getTimesCorrect() >= 2).collect(Collectors.toList());
+        List<Word> haventStartedList = wordList.stream().filter(w -> !w.hasBeenInQuiz()).collect(Collectors.toList());
+        List<Word> learningList = wordList.stream().filter(w -> w.hasBeenInQuiz() && w.getTimesCorrect() < 3).collect(Collectors.toList());
+        List<Word> masteredList = wordList.stream().filter(w -> w.getTimesCorrect() >= 3).collect(Collectors.toList());
 
         haventStartedAdapter = new WordAdapter(haventStartedList);
         learningAdapter = new WordAdapter(learningList);
