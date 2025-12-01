@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
 
     private HomeFragment homeFragment;
     private WordLibraryFragment wordLibraryFragment = new WordLibraryFragment();
+    private SettingsFragment settingsFragment = new SettingsFragment();
     private Fragment active;
 
     private ActivityResultLauncher<Intent> podcastLauncher;
@@ -58,6 +59,11 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
                 .commit();
 
         fm.beginTransaction()
+                .add(R.id.fragment_container, settingsFragment, "3")
+                .hide(settingsFragment)
+                .commit();
+
+        fm.beginTransaction()
                 .add(R.id.fragment_container, homeFragment, "1")
                 .commit();
 
@@ -70,6 +76,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
             } else if (id == R.id.nav_word_library) {
                 fm.beginTransaction().hide(active).show(wordLibraryFragment).commit();
                 active = wordLibraryFragment;
+            } else if (id == R.id.nav_settings) {
+                fm.beginTransaction().hide(active).show(settingsFragment).commit();
+                active = settingsFragment;
             }
             return true;
         });

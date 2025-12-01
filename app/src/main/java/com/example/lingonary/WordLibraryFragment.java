@@ -1,7 +1,9 @@
 package com.example.lingonary;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import com.example.lingonary.adapters.WordAdapter;
 import com.example.lingonary.models.Word;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -87,11 +90,33 @@ public class WordLibraryFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateWordLists();
+    }
+
     private void updateWordLists() {
         if (wordList == null) return;
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("lingonary_prefs", Context.MODE_PRIVATE);
+        int masteryThreshold = sharedPreferences.getInt("mastery_threshold", 3);
+        int sortBy = sharedPreferences.getInt("sort_by", R.id.rbSortAlphabetical);
+
         List<Word> haventStartedList = wordList.stream().filter(w -> !w.hasBeenInQuiz()).collect(Collectors.toList());
-        List<Word> learningList = wordList.stream().filter(w -> w.hasBeenInQuiz() && w.getTimesCorrect() < 3).collect(Collectors.toList());
-        List<Word> masteredList = wordList.stream().filter(w -> w.getTimesCorrect() >= 3).collect(Collectors.toList());
+        List<Word> learningList = wordList.stream().filter(w -> w.hasBeenInQuiz() && w.getTimesCorrect() < masteryThreshold).collect(Collectors.toList());
+        List<Word> masteredList = wordList.stream().filter(w -> w.getTimesCorrect() >= masteryThreshold).collect(Collectors.toList());
+
+        if (sortBy == R.id.rbSortByDate) {
+            Comparator<Word> byDate = Comparator.comparingLong(Word::getDateAdded).reversed();
+            haventStartedList.sort(byDate);
+            learningList.sort(byDate);
+            masteredList.sort(byDate);
+        } else {
+            Comparator<Word> byAlphabetical = Comparator.comparing(Word::getLearning);
+            haventStartedList.sort(byAlphabetical);
+            learningList.sort(byAlphabetical);
+            masteredList.sort(byAlphabetical);
+        }
 
         haventStartedAdapter = new WordAdapter(haventStartedList);
         learningAdapter = new WordAdapter(learningList);

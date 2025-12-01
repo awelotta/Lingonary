@@ -1,6 +1,8 @@
 package com.example.lingonary;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -34,11 +36,21 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quizactivity_main);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("lingonary_prefs", Context.MODE_PRIVATE);
+        int quizLength = sharedPreferences.getInt("quiz_length", 10);
+        int masteryThreshold = sharedPreferences.getInt("mastery_threshold", 3);
+        boolean includeMastered = sharedPreferences.getBoolean("include_mastered", false);
+
         wordList = getIntent().getParcelableArrayListExtra("wordList");
         if (wordList != null) {
-            List<Word> availableWords = wordList.stream().filter(w -> w.getTimesCorrect() < 3).collect(Collectors.toList());
+            List<Word> availableWords;
+            if (includeMastered) {
+                availableWords = new ArrayList<>(wordList);
+            } else {
+                availableWords = wordList.stream().filter(w -> w.getTimesCorrect() < masteryThreshold).collect(Collectors.toList());
+            }
             Collections.shuffle(availableWords);
-            quizList = availableWords.stream().limit(10).collect(Collectors.toList());
+            quizList = availableWords.stream().limit(quizLength).collect(Collectors.toList());
         }
 
         titleVamos = findViewById(R.id.titleVamos);
