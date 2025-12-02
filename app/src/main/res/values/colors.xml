@@ -15,4 +15,5 @@
     <color name="quiz_background">#EBE9E9</color>
     <color name="quiz_answer_box">#FCFCF4</color>
     <color name="quiz_correct_answer">#D9D56B</color>
+    <color name="onboarding_name_background">#F8FFE8</color>
 </resources>

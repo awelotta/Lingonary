@@ -91,7 +91,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Back & Continue at bottom -->
+    <!-- Bottom Back / Continue -->
     <Button
         android:id="@+id/btnBack3"
         android:layout_width="wrap_content"
@@ -100,8 +100,6 @@
         android:layout_marginBottom="32dp"
         android:text="@string/onboarding_back"
         android:textAllCaps="false"
-        android:textSize="14sp"
-        android:background="@drawable/bg_pill_outline"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -113,8 +111,6 @@
         android:layout_marginBottom="32dp"
         android:text="@string/onboarding_continue"
         android:textAllCaps="false"
-        android:textSize="14sp"
-        android:background="@drawable/bg_pill_outline"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

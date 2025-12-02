@@ -73,6 +73,17 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        TextView tvViewMore = view.findViewById(R.id.tvViewMore);
+        TextView tvViewAll = view.findViewById(R.id.tvViewAll);
+
+        View.OnClickListener popupListener = v -> {
+            PodcastListDialogFragment dialogFragment = PodcastListDialogFragment.newInstance();
+            dialogFragment.show(getParentFragmentManager(), "podcast_list_dialog");
+        };
+
+        tvViewMore.setOnClickListener(popupListener);
+        tvViewAll.setOnClickListener(popupListener);
+
         return view;
     }
 }
