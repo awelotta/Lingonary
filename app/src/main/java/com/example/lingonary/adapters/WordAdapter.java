@@ -13,6 +13,16 @@ import java.util.List;
 public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder> {
 
     private List<Word> wordList;
+    private OnWordClickListener listener;
+
+    // Click listener interface
+    public interface OnWordClickListener {
+        void onWordClick(Word word);
+    }
+
+    public void setOnWordClickListener(OnWordClickListener listener) {
+        this.listener = listener;
+    }
 
     public WordAdapter(List<Word> wordList) {
         this.wordList = wordList;
@@ -21,7 +31,8 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
     @NonNull
     @Override
     public WordViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_word, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_word, parent, false);
         return new WordViewHolder(view);
     }
 
@@ -30,6 +41,11 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
         Word word = wordList.get(position);
         holder.textLearning.setText(word.getLearning());
         holder.textNative.setText(word.getNativeLang());
+
+        // Handle item clicks
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) listener.onWordClick(word);
+        });
     }
 
     @Override
@@ -39,6 +55,7 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
 
     static class WordViewHolder extends RecyclerView.ViewHolder {
         TextView textLearning, textNative;
+
         WordViewHolder(View itemView) {
             super(itemView);
             textLearning = itemView.findViewById(R.id.textLearning);

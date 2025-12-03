@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -28,12 +27,8 @@ import java.util.stream.Collectors;
 
 public class WordLibraryFragment extends Fragment {
 
-    private RecyclerView recyclerHaventStarted;
-    private RecyclerView recyclerLearning;
-    private RecyclerView recyclerMastered;
-    private WordAdapter haventStartedAdapter;
-    private WordAdapter learningAdapter;
-    private WordAdapter masteredAdapter;
+    private RecyclerView recyclerHaventStarted, recyclerLearning, recyclerMastered;
+    private WordAdapter haventStartedAdapter, learningAdapter, masteredAdapter;
     private List<Word> wordList;
     private Button btnQuiz;
 
@@ -98,38 +93,53 @@ public class WordLibraryFragment extends Fragment {
 
     private void updateWordLists() {
         if (wordList == null) return;
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("lingonary_prefs", Context.MODE_PRIVATE);
-        int masteryThreshold = sharedPreferences.getInt("mastery_threshold", 3);
-        int sortBy = sharedPreferences.getInt("sort_by", R.id.rbSortAlphabetical);
+
+        SharedPreferences prefs = requireActivity().getSharedPreferences("lingonary_prefs", Context.MODE_PRIVATE);
+        int masteryThreshold = prefs.getInt("mastery_threshold", 3);
+        int sortBy = prefs.getInt("sort_by", R.id.rbSortAlphabetical);
 
         List<Word> haventStartedList = wordList.stream().filter(w -> !w.hasBeenInQuiz()).collect(Collectors.toList());
         List<Word> learningList = wordList.stream().filter(w -> w.hasBeenInQuiz() && w.getTimesCorrect() < masteryThreshold).collect(Collectors.toList());
         List<Word> masteredList = wordList.stream().filter(w -> w.getTimesCorrect() >= masteryThreshold).collect(Collectors.toList());
 
+        Comparator<Word> alphabet = Comparator.comparing(Word::getLearning);
+        Comparator<Word> byDate = Comparator.comparingLong(Word::getDateAdded).reversed();
+
         if (sortBy == R.id.rbSortByDate) {
-            Comparator<Word> byDate = Comparator.comparingLong(Word::getDateAdded).reversed();
             haventStartedList.sort(byDate);
             learningList.sort(byDate);
             masteredList.sort(byDate);
         } else {
-            Comparator<Word> byAlphabetical = Comparator.comparing(Word::getLearning);
-            haventStartedList.sort(byAlphabetical);
-            learningList.sort(byAlphabetical);
-            masteredList.sort(byAlphabetical);
+            haventStartedList.sort(alphabet);
+            learningList.sort(alphabet);
+            masteredList.sort(alphabet);
         }
 
         haventStartedAdapter = new WordAdapter(haventStartedList);
         learningAdapter = new WordAdapter(learningList);
         masteredAdapter = new WordAdapter(masteredList);
 
+        // This handles the clicks on the words
+        haventStartedAdapter.setOnWordClickListener(this::openWordDetailsPopup);
+        learningAdapter.setOnWordClickListener(this::openWordDetailsPopup);
+        masteredAdapter.setOnWordClickListener(this::openWordDetailsPopup);
+
         recyclerHaventStarted.setAdapter(haventStartedAdapter);
         recyclerLearning.setAdapter(learningAdapter);
         recyclerMastered.setAdapter(masteredAdapter);
     }
 
+    private void openWordDetailsPopup(Word word) {
+        WordDetailsDialog dialog = WordDetailsDialog.newInstance(word, deletedWord -> {
+            wordList.remove(deletedWord);
+            updateWordLists();
+        });
+
+        dialog.show(getParentFragmentManager(), "wordDetailsPopup");
+    }
+
     public void addWord(String learning, String nativeWord) {
-        Word newWord = new Word(learning, nativeWord);
-        wordList.add(newWord);
+        wordList.add(new Word(learning, nativeWord));
         updateWordLists();
     }
 }
