@@ -24,13 +24,16 @@
 
             android:gravity="center"
             android:textSize="20sp"
-            android:text="Spaghetti Podcast Title" /> <!-- programmatic this -->
+            android:text="Transcript" /> <!-- TODO programmatically update podcast title -->
         <ImageButton
             android:id="@+id/wordLibraryButton"
             android:layout_gravity="right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_collections_bookmark_24" />
+            android:src="@drawable/baseline_collections_bookmark_24"
+            android:visibility="invisible"
+        />
+<!--        make wordLibraryButton invisible for now since it doesn't work-->
     </LinearLayout>
     <ScrollView
         android:id="@+id/transcriptScroll"
@@ -42,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="40sp"
-            android:text=""/>
+            android:text="japsoifjewapofiajvwpofija japsoifjewapofiajvwpofija apewoifja fpa wfviaj vie vjaov wjva ojfa ewivfja pfvoa vfajf via vfoewi aovfja peovfiajw fvjf veijwfacoip ifpoaismcpofaisvpdaispd oviawpofc iawpeoivf jawpeoifca apewoifja fpa wfviaj vie vjaov wjva ojfa ewivfja pfvoa vfajf via vfoewi aovfja peovfiajw fvjf veijwfacoip ifpoaismcpofaisvpdaispd oviawpofc iawpeoivf jawpeoifca japsoifjewapofiajvwpofija apewoifja fpa wfviaj vie vjaov wjva ojfa ewivfja pfvoa vfajf via vfoewi aovfja peovfiajw fvjf veijwfacoip ifpoaismcpofaisvpdaispd oviawpofc iawpeoivf jawpeoifca"/>
     </ScrollView>
     <LinearLayout
         android:id="@+id/playerControls"
