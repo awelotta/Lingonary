@@ -126,76 +126,95 @@
         </LinearLayout>
 
         <!-- Featured grid -->
-        <LinearLayout
+        <GridLayout
             android:id="@+id/llFeaturedGrid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:columnCount="3"
             android:paddingStart="24dp"
             android:paddingEnd="24dp"
             android:paddingTop="16dp">
 
-            <!-- Row 1 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+            <FrameLayout
+                android:id="@+id/podcastBtn1"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="8dp">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/podcast_cover_one"
+                    android:scaleType="centerCrop"/>
+            </FrameLayout>
 
-                <Button
-                    android:id="@+id/podcastBtn1"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
-                    android:background="@android:color/darker_gray"
-                    android:text="Add words"/>
+            <FrameLayout
+                android:id="@+id/podcastBtn2"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="8dp">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/podcast_cover_two"
+                    android:scaleType="centerCrop"/>
+            </FrameLayout>
 
-                <Button
-                    android:id="@+id/podcastBtn2"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
-                    android:background="@android:color/darker_gray"
-                    android:text="Podcast"/>
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="8dp">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/podcast_cover_three"
+                    android:scaleType="centerCrop"/>
+            </FrameLayout>
 
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="8dp"
-                    android:background="@android:color/darker_gray" />
-            </LinearLayout>
-
-            <!-- Row 2 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="8dp"
                 android:layout_marginTop="12dp">
+                <ImageView
+                    android:id="@+id/iv_podcast_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/podcast_cover_four"
+                    android:scaleType="centerCrop"/>
+            </FrameLayout>
 
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
-                    android:background="@android:color/darker_gray" />
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:layout_marginHorizontal="4dp"
+                android:layout_marginTop="12dp">
+                <ImageView
+                    android:id="@+id/iv_podcast_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/podcast_cover_five"
+                    android:scaleType="centerCrop"/>
+            </FrameLayout>
 
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="4dp"
-                    android:background="@android:color/darker_gray" />
-
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="8dp"
-                    android:background="@android:color/darker_gray" />
-            </LinearLayout>
-        </LinearLayout>
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp">
+                <ImageView
+                    android:id="@+id/iv_podcast_6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/podcast_cover_six"
+                    android:scaleType="centerCrop"/>
+            </FrameLayout>
+        </GridLayout>
 
         <!-- Recent Played header -->
         <LinearLayout
@@ -227,42 +246,54 @@
         </LinearLayout>
 
         <!-- Recent grid -->
-        <LinearLayout
+        <GridLayout
             android:id="@+id/llRecentGrid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:columnCount="3"
             android:paddingStart="24dp"
             android:paddingEnd="24dp"
             android:paddingTop="16dp"
             android:paddingBottom="16dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="8dp">
+                <ImageView
+                    android:id="@+id/iv_podcast_7"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/podcast_cover_seven"
+                    android:scaleType="centerCrop"/>
+            </FrameLayout>
 
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
-                    android:background="@android:color/darker_gray" />
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:layout_marginHorizontal="4dp">
+                <ImageView
+                    android:id="@+id/iv_podcast_8"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/podcast_cover_eight"
+                    android:scaleType="centerCrop"/>
+            </FrameLayout>
 
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="4dp"
-                    android:background="@android:color/darker_gray" />
-
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="8dp"
-                    android:background="@android:color/darker_gray" />
-            </LinearLayout>
-        </LinearLayout>
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="8dp">
+                <ImageView
+                    android:id="@+id/iv_podcast_9"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/podcast_cover_nine"
+                    android:scaleType="centerCrop"/>
+            </FrameLayout>
+        </GridLayout>
     </LinearLayout>
 </ScrollView>

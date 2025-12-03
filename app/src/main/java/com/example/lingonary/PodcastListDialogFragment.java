@@ -40,6 +40,9 @@ public class PodcastListDialogFragment extends DialogFragment {
         podcastList.add(new Podcast("Maxi Ferraro: “Lo ideal sería que el Gobierno no se radicalice”", "CNN en Español"));
         podcastList.add(new Podcast("Podcast 2", "Description 2"));
         podcastList.add(new Podcast("Podcast 3", "Description 3"));
+        podcastList.add(new Podcast("Podcast 4", "Description 4"));
+        podcastList.add(new Podcast("Podcast 5", "Description 5"));
+        podcastList.add(new Podcast("Podcast 6", "Description 6"));
 
         PodcastAdapter adapter = new PodcastAdapter(podcastList);
         rvPodcasts.setAdapter(adapter);
