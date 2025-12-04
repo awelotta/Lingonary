@@ -9,15 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lingonary.adapters.WordAdapter;
+import com.example.lingonary.database.WordDatabase;
 import com.example.lingonary.models.Word;
 
 import java.util.ArrayList;
@@ -29,9 +32,9 @@ public class WordLibraryFragment extends Fragment {
 
     private RecyclerView recyclerHaventStarted, recyclerLearning, recyclerMastered;
     private WordAdapter haventStartedAdapter, learningAdapter, masteredAdapter;
-    private List<Word> wordList;
+    private List<Word> wordList = new ArrayList<>();
     private Button btnQuiz;
-
+    private WordDatabase db;
     private ActivityResultLauncher<Intent> quizLauncher;
 
     @Override
@@ -43,9 +46,18 @@ public class WordLibraryFragment extends Fragment {
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
+
                         if (data != null) {
-                            wordList = data.getParcelableArrayListExtra("wordList");
-                            updateWordLists();
+                            ArrayList<Word> updatedWords =
+                                    data.getParcelableArrayListExtra("wordList");
+
+                            if (updatedWords != null) {
+                                new Thread(() -> {
+                                    for (Word w : updatedWords) {
+                                        db.wordDao().updateWord(w);
+                                    }
+                                }).start();
+                            }
                         }
                     }
                 });
@@ -53,7 +65,10 @@ public class WordLibraryFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_word_library, container, false);
 
         recyclerHaventStarted = view.findViewById(R.id.recyclerHaventStarted);
@@ -65,61 +80,80 @@ public class WordLibraryFragment extends Fragment {
         recyclerLearning.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerMastered.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        if (wordList == null) {
-            wordList = new ArrayList<>();
-            wordList.add(new Word("Amor", "love"));
-            wordList.add(new Word("Tranquilo", "quiet"));
-            wordList.add(new Word("Seguro", "safe"));
-            wordList.add(new Word("Ocho", "eight"));
-            wordList.add(new Word("Vamos", "let's go"));
-        }
+        db = WordDatabase.getInstance(requireContext());
 
-        updateWordLists();
+        observeWordList();
 
         btnQuiz.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), QuizActivity.class);
-            intent.putParcelableArrayListExtra("wordList", (ArrayList<Word>) wordList);
+            intent.putParcelableArrayListExtra("wordList", new ArrayList<>(wordList));
             quizLauncher.launch(intent);
         });
 
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateWordLists();
+    private void observeWordList() {
+        db.wordDao().getAllWords().observe(getViewLifecycleOwner(), words -> {
+            if (words == null) return;
+
+            // Initial seed if DB is empty
+            if (words.isEmpty()) {
+                seedSampleWords();
+                return;
+            }
+
+            wordList = words;
+            updateWordLists();
+        });
+    }
+
+    private void seedSampleWords() {
+        new Thread(() -> {
+            db.wordDao().insertWord(new Word("Amor", "love"));
+            db.wordDao().insertWord(new Word("Tranquilo", "quiet"));
+            db.wordDao().insertWord(new Word("Seguro", "safe"));
+            db.wordDao().insertWord(new Word("Ocho", "eight"));
+            db.wordDao().insertWord(new Word("Vamos", "let's go"));
+        }).start();
     }
 
     private void updateWordLists() {
-        if (wordList == null) return;
+        SharedPreferences prefs = requireActivity()
+                .getSharedPreferences("lingonary_prefs", Context.MODE_PRIVATE);
 
-        SharedPreferences prefs = requireActivity().getSharedPreferences("lingonary_prefs", Context.MODE_PRIVATE);
         int masteryThreshold = prefs.getInt("mastery_threshold", 3);
         int sortBy = prefs.getInt("sort_by", R.id.rbSortAlphabetical);
 
-        List<Word> haventStartedList = wordList.stream().filter(w -> !w.hasBeenInQuiz()).collect(Collectors.toList());
-        List<Word> learningList = wordList.stream().filter(w -> w.hasBeenInQuiz() && w.getTimesCorrect() < masteryThreshold).collect(Collectors.toList());
-        List<Word> masteredList = wordList.stream().filter(w -> w.getTimesCorrect() >= masteryThreshold).collect(Collectors.toList());
+        List<Word> haventStarted = wordList.stream()
+                .filter(w -> !w.hasBeenInQuiz())
+                .collect(Collectors.toList());
+
+        List<Word> learning = wordList.stream()
+                .filter(w -> w.hasBeenInQuiz() && w.getTimesCorrect() < masteryThreshold)
+                .collect(Collectors.toList());
+
+        List<Word> mastered = wordList.stream()
+                .filter(w -> w.getTimesCorrect() >= masteryThreshold)
+                .collect(Collectors.toList());
 
         Comparator<Word> alphabet = Comparator.comparing(Word::getLearning);
         Comparator<Word> byDate = Comparator.comparingLong(Word::getDateAdded).reversed();
 
         if (sortBy == R.id.rbSortByDate) {
-            haventStartedList.sort(byDate);
-            learningList.sort(byDate);
-            masteredList.sort(byDate);
+            haventStarted.sort(byDate);
+            learning.sort(byDate);
+            mastered.sort(byDate);
         } else {
-            haventStartedList.sort(alphabet);
-            learningList.sort(alphabet);
-            masteredList.sort(alphabet);
+            haventStarted.sort(alphabet);
+            learning.sort(alphabet);
+            mastered.sort(alphabet);
         }
 
-        haventStartedAdapter = new WordAdapter(haventStartedList);
-        learningAdapter = new WordAdapter(learningList);
-        masteredAdapter = new WordAdapter(masteredList);
+        haventStartedAdapter = new WordAdapter(haventStarted);
+        learningAdapter = new WordAdapter(learning);
+        masteredAdapter = new WordAdapter(mastered);
 
-        // This handles the clicks on the words
         haventStartedAdapter.setOnWordClickListener(this::openWordDetailsPopup);
         learningAdapter.setOnWordClickListener(this::openWordDetailsPopup);
         masteredAdapter.setOnWordClickListener(this::openWordDetailsPopup);
@@ -130,16 +164,17 @@ public class WordLibraryFragment extends Fragment {
     }
 
     private void openWordDetailsPopup(Word word) {
-        WordDetailsDialog dialog = WordDetailsDialog.newInstance(word, deletedWord -> {
-            wordList.remove(deletedWord);
-            updateWordLists();
-        });
+        WordDetailsDialog dialog = WordDetailsDialog.newInstance(
+                word,
+                deletedWord -> new Thread(() -> {
+                    db.wordDao().deleteWord(deletedWord);
+                }).start()
+        );
 
         dialog.show(getParentFragmentManager(), "wordDetailsPopup");
     }
 
     public void addWord(String learning, String nativeWord) {
-        wordList.add(new Word(learning, nativeWord));
-        updateWordLists();
+        new Thread(() -> db.wordDao().insertWord(new Word(learning, nativeWord))).start();
     }
 }
