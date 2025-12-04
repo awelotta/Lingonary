@@ -16,6 +16,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.PopupWindow
+import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -32,6 +33,7 @@ class TranscriptPlayerActivity: AppCompatActivity() {
     lateinit var mediaPlayer: MediaPlayer
     lateinit var playButton: AppCompatImageButton
     lateinit var transcript: TextView
+    lateinit var transcriptScroll: ScrollView
     var newWords: ArrayList<Word> = arrayListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +60,7 @@ class TranscriptPlayerActivity: AppCompatActivity() {
             setResult(RESULT_OK, result)
             finish()
         }
-
+        // set transcript text here as a spannable retrieve halfway through here
         val inputStream = resources.openRawResource(R.raw.transcript)
         val transcriptText = readAllBytes(inputStream)
         val spaceIndices = getSpaceIndices(transcriptText)
@@ -89,7 +91,21 @@ class TranscriptPlayerActivity: AppCompatActivity() {
         transcript = findViewById(R.id.transcript)
         transcript.text = spannable
         transcript.movementMethod = LinkMovementMethod()
+
+        //
     }
+
+    // TODO put this somewhere where it gets called periodically
+    // right now this function isn't connected to anything so nothing will happen
+    // I might just let it sit here and do nothing
+    public fun refreshTranscriptPosition() {
+        // refresh transcript position to match current MediaPlayer position
+        // currently just as a hack as proportion of the transcript,
+        // which should line up for shorter podcasts
+
+        var mediaPlayerRelativePosition = mediaPlayer.currentPosition / mediaPlayer.duration
+    }
+
     private fun readAllBytes(inputStream: InputStream): String {
         // Source - https://stackoverflow.com/a/35446009
         // Posted by Slava Vedenin, modified by community. See post 'Timeline' for change history
