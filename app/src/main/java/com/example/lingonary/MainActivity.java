@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.lingonary.models.Podcast;
 import com.example.lingonary.models.Word;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.lingonary.onboarding.OnboardingKeys;
@@ -108,8 +109,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
     }
 
     @Override
-    public void onOpenPodcast() {
+    public void onOpenPodcast(Podcast podcast) {
         Intent intent = new Intent(this, PodcastActivity.class);
+        // TODO: Pass podcast data to PodcastActivity
         podcastLauncher.launch(intent);
     }
 

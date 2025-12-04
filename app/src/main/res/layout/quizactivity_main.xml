@@ -26,16 +26,16 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/backArrow"
-        app:layout_constraintEnd_toStartOf="@+id/timerIcon"
+        app:layout_constraintEnd_toStartOf="@+id/flagIcon"
         app:layout_constraintStart_toEndOf="@+id/backArrow"
         app:layout_constraintTop_toTopOf="@+id/backArrow" />
 
     <ImageView
-        android:id="@+id/timerIcon"
+        android:id="@+id/flagIcon"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="16dp"
-        android:src="@android:drawable/ic_lock_idle_alarm"
+        android:src="@android:drawable/ic_menu_myplaces"
         app:layout_constraintBottom_toBottomOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/progressBar" />
