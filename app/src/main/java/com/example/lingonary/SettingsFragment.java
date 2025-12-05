@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -44,7 +45,16 @@ public class SettingsFragment extends Fragment {
         btnSendFeedback = view.findViewById(R.id.btnSendFeedback);
         btnSave = view.findViewById(R.id.btnSave);
 
+        ImageView infoQuizLength = view.findViewById(R.id.info_quiz_length);
+        ImageView infoMasteryThreshold = view.findViewById(R.id.info_mastery_threshold);
+
         loadSettings();
+
+        infoQuizLength.setOnClickListener(v -> 
+                Toast.makeText(getContext(), "Changes number of questions in the quiz", Toast.LENGTH_LONG).show());
+
+        infoMasteryThreshold.setOnClickListener(v -> 
+                Toast.makeText(getContext(), "Adjusts how many correct answers it will take for a word to be mastered", Toast.LENGTH_LONG).show());
 
         btnSendFeedback.setOnClickListener(v -> {
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
